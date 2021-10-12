@@ -1,0 +1,101 @@
+---
+name: "Devyn Holland" 
+course: "cs510"
+title: "Tides and Currents.Rmd"
+output: html_document
+---
+Some Code Credit:
+https://stackoverflow.com/questions/41435777/perform-fourier-analysis-to-a-time-series-in-r
+
+http://cowlet.org/2013/09/15/understanding-data-science-feature-extraction-with-r.html
+
+
+```{r}
+#READING IN DATA FILE
+data <- read.csv("fourierTides.csv")
+
+#NEUTRAL FILE FORMAT
+nff = function(x = NULL, n = NULL, up = 10L, plot = TRUE, add = FALSE, main = NULL, ...){
+#MATH CALCULATIONS
+  #DIRECT TRANSFORMATION/FOURIER FUNCTION
+  dff = fft(x)
+  
+  #TIME
+  t = seq(from = 1, to = length(x))
+  
+  #UPSAMPLED TIME
+  nt = seq(from = 1, to = length(x)+1-1/up, by = 1/up)
+  
+  #NEW SPECTRUM
+  ndff = array(data = 0, dim = c(length(nt), 1L))
+  ndff[1] = dff[1] 
+  if(n != 0){
+    #POSITIVE FREQUENCIES
+    ndff[2:(n+1)] = dff[2:(n+1)]
+    #NEGATIVE FREQUENCIES
+    ndff[length(ndff):(length(ndff) - n + 1)] = dff[length(x):(length(x) - n + 1)]
+  }
+  
+  #INVERSES
+  indff = fft(ndff/73, inverse = TRUE)
+  idff = fft(dff/73, inverse = TRUE)
+  
+  #CREATING PLOT
+  if(plot){
+    if(!add){
+      plot(x = t,
+           y = x, 
+           pch = 16L, 
+           xlab = "Time", 
+           ylab = "Measurement",
+           main = "Harmonics")
+      lines(y = Mod(idff), x = t, col = adjustcolor(1L, alpha = 0.5))
+    }
+    lines(y = Mod(indff), x = nt, ...)
+  }
+  ret = data.frame(time = nt, y = Mod(indff))
+  return(ret)
+}
+```
+
+
+```{r}
+#HARMONICS PLOT
+nff(data$Predicted..m., n = 18, up = 1000, col =3 )
+```
+
+
+```{r}
+#SETTING UP VARIABLE PLOT FOR DAYS
+daily_plot <- plot(x = c(1:24), y = data$Verified..m.[1:24])
+
+#SETTING UP VARIABLE PLOT FOR MONTHS
+monthly_plot <- plot(x = c(1:(24*28)), y = data$Verified..m.[1:(24*28)])
+
+#CREATING PLOT
+plot(fft(c(c(1:(24*28)), data$Verified..m.[1:(24*28)])))
+b1.x.fft <- fft(data$Verified..m.)
+
+#CALCULATING AMPLITUDE
+amplitude <- Mod(b1.x.fft[1:(length(b1.x.fft)/2)])
+
+#CALCULATING FREQUENCY
+frequency <- seq(0, 10000, length.out=length(b1.x.fft)/2)
+
+#CREATING PLOT FOR FREQUENCY VS. AMPLITUDE
+plot(amplitude ~ frequency, t="l", xlab = "Frequency", ylab = "Amplitude")
+```
+
+```{r}
+#FOCUS IN ON HOW MANY TIMES A CERTAIN FREQUENCY TOOK PLACE
+plot(amplitude ~ frequency, t="l", xlim=c(700,2000), ylim=c(0,500))
+axis(1, at=seq(700,2000,100), labels=FALSE)  
+```
+```{r}
+#SELECT THE TOP 15 AMPLITUDE POINTS
+sorted <- sort.int(amplitude, decreasing=TRUE, index.return=TRUE)
+#15 AMPLITUDE POINTS
+top15 <- sorted$ix[1:7] 
+#TOP 15 FREQUENCIES
+top15f <- frequency[top15] 
+```
