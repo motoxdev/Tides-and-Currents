@@ -1,16 +1,16 @@
 # Tides-and-Currents
-######Devyn Holland <br />
-######CS 510
+Devyn Holland <br />
+CS 510
 
 **PURPOSE:** <br />
 The purpose of this project is to read in the 'tide and current'
 excel spreadsheet and produce the most common frequencies.<br />
 
 **FILE EXPLANATIONS:** <br />
-*fourierTides.csv - data file <br />
-*README.md - Comments/Documentation of project <br />
-*Tides and Currents.Rmd - code <br />
-*Tides and Currents.Rproj - entire project <br />
+* fourierTides.csv - data file <br />
+* README.md - Comments/Documentation of project <br />
+* Tides and Currents.Rmd - code <br />
+* Tides and Currents.Rproj - entire project <br />
 
 
 **CODE ORGANIZATION/PROCESS:**<br />
