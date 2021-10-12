@@ -1,4 +1,6 @@
 # Tides-and-Currents
+# Devyn Holland 
+# CS 510
 
 PURPOSE:
 The purpose of this project is to read in the 'tide and current' excel spreadsheet and produce the most common frequencies.
