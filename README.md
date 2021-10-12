@@ -5,11 +5,11 @@
 PURPOSE:
 The purpose of this project is to read in the 'tide and current' excel spreadsheet and produce the most common frequencies.
 
-FILE EXPLANATIONS:
-fourierTides.csv - data file
-README.md - Comments/Documentation of project
-Tides and Currents.Rmd - code
-Tides and Currents.Rproj - entire project
+FILE EXPLANATIONS: <br />
+fourierTides.csv - data file <br />
+README.md - Comments/Documentation of project <br />
+Tides and Currents.Rmd - code <br />
+Tides and Currents.Rproj - entire project <br />
 
 
 CODE ORGANIZATION/PROCESS:
